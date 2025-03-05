@@ -3,6 +3,7 @@ const axios = require('axios');
 const config = require('config');
 const router = express.Router();
 const auth = require('../../middleware/auth');
+const checkObjectId = require("../../middleware/checkObjectId");
 const { check, validationResult } = require('express-validator');
 // bring in normalize to give us a proper url, regardless of what user entered
 const normalize = require('normalize-url');
@@ -114,6 +115,7 @@ router.get('/', async (req, res) => {
 // @access   Public
 router.get(
   '/user/:user_id',
+  checkObjectId("id"),
   async ({ params: { user_id } }, res) => {
     try {
       const profile = await Profile.findOne({
